@@ -1,41 +1,13 @@
 ---
-<<<<<<< HEAD
 title: "index"
-=======
-title: "Homework 2"
->>>>>>> fac0a5a (Homework_3)
 author: "Phoebe"
-date: "2023-01-25"
+date: "Spring 2023"
 output: html_document
 ---
 
-<<<<<<< HEAD
 [Cousens Homework 2](Homework_02.html)
 
-
 [Cousens Homework 3](CousensHomework_3.html)
-=======
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
-## R Markdown
+[Cousens Homework 4](CousensHomework4.html)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
->>>>>>> fac0a5a (Homework_3)
