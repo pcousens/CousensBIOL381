@@ -1,5 +1,9 @@
 ---
+<<<<<<< HEAD
 title: "Homework_3"
+=======
+title: "CousensHomework_3"
+>>>>>>> fac0a5a (Homework_3)
 author: "Phoebe"
 date: "2023-02-01"
 output: html_document
@@ -9,6 +13,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<<<<<<< HEAD
 
 
 
@@ -32,4 +37,29 @@ Problem Number | Find                                                  | Replace
 5. Capture the first letter and use captures to break up the line word by word. Use replace to remove unwanted characters
 6. Rather than using `\w*` and capturing all characters of the second word, I used replace to specify only the first 4 words
 7. ^^ same as 6, but specifying 3 letters for both the first and second word.
+=======
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+#Cousens Homework 3 -- Regular Expression Puzzles
+
+1. Find- `\s{2,}`    Replace- `,`
+>>>>>>> fac0a5a (Homework_3)
 
