@@ -1,0 +1,90 @@
+---
+title: "CousensHomework5"
+author: "Phoebe"
+date: "2023-02-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1.
+```{r}
+n_dims <- runif(1, min=3, max=10) # creating a vector from 1-10
+a <- c(1:n_dims^2) #used c() function to create vector
+print(a)
+
+b <- sample(x=a) # sample function shuffles elements
+print(b)
+
+c <- matrix(data=b, nrow= n_dims) # number of rows is the square root of the total number of data points (n_dims^2)
+print(c)
+
+d <- t(c) # t function is used to transpose 
+print(d) # flipped rows and columns
+
+first <- sum(d[1,]) # selected first row of d
+print(first)
+firstm <- mean(d[1,]) # selected first row of d
+print(firstm)
+
+last <- sum(d[end(d),]) # selected last row of d
+print(last)
+lastm <- mean(d[end(d),]) # selected last row of d
+print(lastm)
+
+e <- sample(3:end(d), 1) 
+f <- eigen(e)
+##### output are square numbers
+
+typeof(e)
+```
+
+#2.
+```{r}
+g <- runif(16) # generate 16 random numbers
+my_matrix <- matrix(data=g, nrow=4) # create a 4x4 matrix with those numbers
+print(my_matrix)
+
+i <- sample(c(0,1), 100, rep= TRUE) # 100 numbers between 0 and 1
+my_logical <- i<1 # where i is less than 1 it will say TRUE
+print(my_logical)
+
+my_letters <- sample(letters, 26) # vector of 26 lowercase letters
+print(my_letters)
+
+j <- list(my_matrix[2,2],my_logical[[2]],my_letters[[2]]) # created a list with coordinates of desired element from the matrix, then specifically selected the second element from the logical and letter vectors
+print(j)
+
+typeof(j)
+
+k <- unlist(j) # unlist function takes it out of a list and makes it a vector
+print(k)
+
+typeof(k)
+```
+
+#3
+```{r}
+
+my_units <- runif(26, min=0, max=10) # 26 random numbers between 0 and 10
+
+my_letters <- toupper(sample(letters, 26)) # 26 uppercase letters
+
+df <- data.frame(my_units,my_letters) # data frame w 2 columns, one for each of the vectors created
+print(df)
+
+df[sample(1:26, 4),1] <- NA # randomly choose 4 rows and assign NA to them
+print(df)
+
+which(is.na(df)) # determine which rows were altered
+
+df[,2] <- sort(df$my_letters) # sort function used to alphabetize 
+s <- data.frame(my_units, sort(df$my_letters))
+print(s)
+
+u <- mean(df[,1]) # mean of the first column
+print(u)
+
+```
