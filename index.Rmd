@@ -1,6 +1,6 @@
 ---
-title: "index"
-author: "Phoebe"
+title: "BIOL 381 Homework"
+author: "Phoebe Cousens"
 date: "Spring 2023"
 output: html_document
 ---
