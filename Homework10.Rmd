@@ -1,0 +1,127 @@
+---
+title: "Homework10"
+author: "Phoebe"
+date: "2023-04-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(tidyr)
+```
+
+```{r}
+vector <- sample(0:5, 50, replace=T)
+  
+counter <- 0
+```
+
+```{r}
+for(i in 1:length(vector)){
+  if(vector[i] == 0) {
+    counter <- 1 + counter
+  }
+  print(counter)
+}
+
+```
+
+
+```{r}
+x <- which(vector == 0)
+subset <- length(x)
+
+print(subset)
+
+```
+
+```{r}
+m <- matrix(nrow=10, ncol=3)
+
+mat<- function(x,y) {
+  m <- matrix(nrow=x, ncol=y)
+  for (i in 1:x) { 
+  for (j in 1:y) {
+    m[i,j] <- i*j
+    print(m)
+  }
+  }
+}
+
+mat(10, 6)
+
+```
+
+```{r}
+set.seed(100)
+```
+
+```{r}
+group <- c(rep("Group1",5),rep("Group2",5),rep("Group3",5))
+resvar <- c(runif(5) + 1 , runif(5) + 5 , runif(5) + 10)
+frame <- data.frame(trt=group, res=resvar)
+print(frame)
+```
+
+```{r}
+#tapply(variable vector, grouping variable, function we want to apply)
+
+obs <- tapply(frame$res, frame$trt,mean)
+print(obs)
+
+```
+```{r}
+frame_shuf <- frame
+frame_shuf$res <- sample(frame_shuf$res)
+print(frame_shuf)
+```
+
+```{r}
+shuf <- tapply(frame_shuf$res, frame_shuf$trt, mean)
+print(shuf)
+
+```
+
+
+```{r}
+Group1 <- data.frame(rep("Group1", 5), runif(5) + 1)
+colnames(Group1) <- c("Group", "Length")
+Group2 <- data.frame(rep("Group2", 5), runif(5) + 5)
+colnames(Group2) <- c("Group", "Length")
+Group3 <- data.frame(rep("Group3", 5), runif(5) + 10)
+colnames(Group3) <- c("Group", "Length")
+data <- rbind(Group1, Group2, Group3)
+
+mog <- c(mean(data$Length, Group = "Group1"), mean(data$Length, Group = "Group2"), mean(data$Length, Group = "Group3"))
+
+meancalc <- function(mc){
+  mc$Length <-sample(mc$Length)
+  mean <- tapply(mc$Length, mc$Group, mean)
+  return(mean)
+}
+
+df <- matrix(nrow=100, ncol=4)
+for(i in 1:100){
+  df[i,] <- c(i, meancalc(data))
+}
+
+colnames(df) <- c("rep", "Group1", "Group2", "Group3")
+print(df)
+```
+
+```{r}
+hist(df[,2])
+```
+
+```{r}
+hist(df[,3])
+```
+
+```{r}
+hist(df[,4])
+```

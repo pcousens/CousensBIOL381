@@ -14,3 +14,19 @@ output: html_document
 [Cousens Homework 5](CousensHomework5.html)
 
 [Cousens Homework 6](CousensHomework6.html)
+
+[Cousens Homework 7](Homework7.html)
+
+[Cousens Homework 8](Homework8.html)
+
+[Cousens Homework 9 Functions](my.functions.R)
+
+[Cousens Homework 9](Homework.9.html)
+
+[Cousens Homework 10](Homework10.html)
+
+[Cousens Homework 11 Functions](HW11Functions.R)
+
+[Cousens Homework 11](Homework11.html)
+
+[Cousens Homework 12](Homework12.html)

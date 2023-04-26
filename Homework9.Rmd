@@ -1,0 +1,45 @@
+---
+title: "Homework9"
+author: "Phoebe"
+date: "2023-04-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+z <- read.csv("SHEAbl.csv")
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+z <- read.csv("SHEAbl.csv")
+```
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+source("myfunctions.R")
+```
+
+```{r}
+set <- z[,9:11]
+cd <- cleandata(set)
+```
+
+```{r}
+xcorr <- meanf(cd, "XCorr")
+difxcorr <- meanf(cd, "X..916.Corr")
+uniqxcorr <- meanf(cd, "Uniq....916.corr")
+```
+
+```{r}
+fakeset <- fake(xcorr, difxcorr, uniqxcorr)
+plot <- anov(fakeset)
+```
+

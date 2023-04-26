@@ -1,0 +1,174 @@
+---
+title: "CousensHomework7"
+author: "Phoebe"
+date: "2023-03-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(ggplot2)
+library(MASS)
+library(dplyr)
+library(tidyverse)
+getwd()
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+```
+
+```{r}
+z <- rnorm(n=3000,mean=0.2)
+z <- data.frame(1:3000,z)
+names(z) <- list("ID","myVar")
+z <- z[z$myVar>0,]
+```
+
+```{r}
+str(z)
+```
+
+```{r}
+summary(z$myVar)
+```
+
+```{r}
+p1 <- ggplot(data=z, aes(x=myVar, y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) 
+print(p1)
+```
+
+```{r}
+p1 <-  p1 +  geom_density(linetype="dotted",size=0.75)
+print(p1)
+```
+
+```{r}
+normPars <- fitdistr(z$myVar,"normal")
+print(normPars)
+str(normPars)
+normPars$estimate["mean"]
+```
+
+```{r}
+meanML <- normPars$estimate["mean"]
+sdML <- normPars$estimate["sd"]
+
+xval <- seq(0,max(z$myVar),len=length(z$myVar))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="red", n = length(z$myVar), args = list(mean = meanML, sd = sdML))
+ p1 + stat
+```
+
+```{r}
+expoPars <- fitdistr(z$myVar,"exponential")
+rateML <- expoPars$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="blue", n = length(z$myVar), args = list(rate=rateML))
+ p1 + stat + stat2
+```
+
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="darkgreen", n = length(z$myVar), args = list(min=min(z$myVar), max=max(z$myVar)))
+ p1 + stat + stat2 + stat3
+```
+
+```{r}
+gammaPars <- fitdistr(z$myVar,"gamma")
+shapeML <- gammaPars$estimate["shape"]
+rateML <- gammaPars$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="brown", n = length(z$myVar), args = list(shape=shapeML, rate=rateML))
+ p1 + stat + stat2 + stat3 + stat4
+```
+
+```{r}
+pSpecial <- ggplot(data=z, aes(x=myVar/(max(myVar + 0.1)), y=..density..)) +
+  geom_histogram(color="grey60",fill="cornsilk",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$myVar/max(z$myVar + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="orchid", n = length(z$myVar), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+```{r}
+library(readr)
+library(dplyr)
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+msdata <- read.csv("SHEAbl.csv")
+View(msdata)
+```
+
+```{r}
+print(msdata)
+```
+
+```{r}
+hist <- ggplot(data = msdata, aes(x=XCorr, y=..density..)) +
+  geom_histogram(color="black", fill="pink", size=0.2)
+print(hist)
+```
+
+```{r}
+hist <- hist + geom_density(linetype="dotted", size=0.75)
+print(hist)
+```
+
+```{r}
+norm <- fitdistr(msdata$XCorr, "normal")
+print(norm)
+str(norm)
+norm$estimate["mean"]
+```
+
+```{r}
+meanML <- norm$estimate["mean"]
+sdML <- norm$estimate["sd"]
+
+xval <- seq(0, max(msdata$XCorr), len=length(msdata$XCorr))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="blue", n = length(msdata$XCorr), args = list(mean = meanML, sd = sdML))
+ hist + stat
+```
+
+```{r}
+expo <- fitdistr(msdata$XCorr, "exponential")
+rateML <- expo$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="lightgreen", n = length(msdata$XCorr), args = list(rate=rateML))
+ hist + stat + stat2
+```
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="orange", n = length(msdata$XCorr), args = list(min=min(msdata$XCorr), max=max(msdata$XCorr)))
+ hist + stat + stat2 + stat3
+```
+```{r}
+gamma <- fitdistr(data$XCorr,"gamma")
+shapeML <- gamma$estimate["shape"]
+rateML <- gamma$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="purple", n = length(msdata$XCorr), args = list(shape=shapeML, rate=rateML))
+ hist + stat + stat2 + stat3 + stat4
+```
+
+```{r}
+pSpecial <- ggplot(data= msdata, aes(x=XCorr/(max(XCorr + 0.1)), y=..density..)) +
+  geom_histogram(color="black",fill="pink",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=msdata$XCorr/max(msdata$XCorr + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="darkgreen", n = length(msdata$XCorr), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+

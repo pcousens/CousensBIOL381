@@ -1,0 +1,53 @@
+---
+title: "CousensHomework8"
+author: "Phoebe"
+date: "2023-03-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(MASS)
+library(tidyverse)
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop")
+my.data <- read.csv(SHEAbl.csv)
+print(my.data)
+```
+
+```{r}
+str(my.data)
+```
+
+```{r}
+summary(my.data$concentration)
+```
+
+```{r}
+one.way.anova <- aov(concentration ~ time, data = my.data)
+summary(one.way.anova)
+```
+
+```{r}
+qplot(my.data[my.data>0], color = "black", fill = "pink")
+```
+
+```{r}
+my.beta <- rbeta(my.data,shape1=1,shape2=1)
+qplot(my.beta,color=("black"),fill=("lightpink"))
+```
+
+
+
+
+
+
+
+
