@@ -1,0 +1,92 @@
+---
+title: "Homework.9"
+author: "Phoebe"
+date: "2023-04-18"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+z <- read.csv("SHEAbl.csv", header=T, sep=",")
+```
+
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(sqldf)
+library(patchwork)
+library(MASS)
+source("my.functions.R")
+```
+
+
+```{r}
+set <- z[,8:11]
+cd <- cleandata(set)
+colnames(cd)[1] <- "ppm"
+colnames(cd)[2] <- "xcorr"
+colnames(cd)[3] <- "dxcorr"
+colnames(cd)[4] <- "uxcorr"
+print(colnames(cd))
+```
+
+```{r}
+# question 1
+```
+
+```{r}
+means <- meanf(cd)
+print(means)
+sds <- sdf(cd)
+print(sds)
+fakeset <- fake(cd)
+head(fakeset, 5)
+longfs <- piv(fakeset)
+```
+
+```{r}
+ANOVAtest <- an(fakeset)
+print(ANOVAtest)
+```
+
+```{r}
+box1 <- box(fakeset)
+```
+
+```{r}
+# question 2
+```
+
+```{r}
+means2 <- meanf2(cd)
+print(means2)
+sds2 <- sdf(cd)
+print(sds2)
+
+```
+
+```{r}
+fakeset2 <- fake2(cd)
+head(fakeset2, 5)
+longfs2 <- piv2(fakeset2)
+```
+
+```{r}
+ANOVAtest2 <- anov2(fakeset2)
+print(ANOVAtest2)
+```
+
+`even when I increased the sample size to 800 and added one to the means of xcorr values, the difference between xcorr values and unique x corr values is insignificant.`
+
+```{r}
+box2 <- boxp2(fakeset2)
+```
+
+

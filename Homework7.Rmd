@@ -1,0 +1,93 @@
+---
+title: "Homework7"
+author: "Phoebe"
+date: "2023-03-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+z <- read.csv("SHEAbl.csv")
+```
+
+```{r}
+library(ggplot2)
+library(patchwork)
+library(MASS)
+library(tidyverse)
+```
+
+```{r}
+view(z)
+
+str(z)
+summary(z)
+```
+
+```{r}
+hist <- ggplot(data = z, aes(x=XCorr, y=..density..)) +
+  geom_histogram(color="black", fill="pink", size=0.2)
+print(hist)
+```
+
+```{r}
+hist <- hist + geom_density(linetype="dotted", size=0.75)
+print(hist)
+```
+
+```{r}
+norm <- fitdistr(z$XCorr, "normal")
+print(norm)
+str(norm)
+norm$estimate["mean"]
+```
+
+```{r}
+meanML <- norm$estimate["mean"]
+sdML <- norm$estimate["sd"]
+
+xval <- seq(0, max(z$XCorr), len=length(z$XCorr))
+
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="blue", n = length(z$XCorr), args = list(mean = meanML, sd = sdML))
+ hist + stat
+```
+
+```{r}
+expo <- fitdistr(z$XCorr, "exponential")
+rateML <- expo$estimate["rate"]
+
+stat2 <- stat_function(aes(x = xval, y = ..y..), fun = dexp, colour="lightgreen", n = length(z$XCorr), args = list(rate=rateML))
+ hist + stat + stat2
+```
+```{r}
+stat3 <- stat_function(aes(x = xval, y = ..y..), fun = dunif, colour="orange", n = length(z$XCorr), args = list(min=min(z$XCorr), max=max(z$XCorr)))
+ hist + stat + stat2 + stat3
+```
+```{r}
+gamma <- fitdistr(z$XCorr,"gamma")
+shapeML <- gamma$estimate["shape"]
+rateML <- gamma$estimate["rate"]
+
+stat4 <- stat_function(aes(x = xval, y = ..y..), fun = dgamma, colour="purple", n = length(z$XCorr), args = list(shape=shapeML, rate=rateML))
+ hist + stat + stat2 + stat3 + stat4
+```
+
+```{r}
+pSpecial <- ggplot(data= z, aes(x=XCorr/(max(XCorr + 0.1)), y=..density..)) +
+  geom_histogram(color="black",fill="pink",size=0.2) + 
+  xlim(c(0,1)) +
+  geom_density(size=0.75,linetype="dotted")
+
+betaPars <- fitdistr(x=z$XCorr/max(z$XCorr + 0.1),start=list(shape1=1,shape2=2),"beta")
+shape1ML <- betaPars$estimate["shape1"]
+shape2ML <- betaPars$estimate["shape2"]
+
+statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="darkgreen", n = length(z$XCorr), args = list(shape1=shape1ML,shape2=shape2ML))
+pSpecial + statSpecial
+```
+
+

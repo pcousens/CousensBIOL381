@@ -1,0 +1,97 @@
+---
+title: "Homework12"
+author: "Phoebe"
+date: "2023-04-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(tidyr)
+library(ggthemes)
+library(patchwork)
+```
+
+```{r}
+I <- Indometh
+head(I, 5)
+```
+```{r}
+table(I$time)
+```
+```{r}
+table(I$conc)
+```
+
+```{r}
+p1 <- ggplot(I, aes(x=time, y=conc)) + 
+    geom_point()
+print(p1)
+```
+
+```{r}
+p1.2 <- ggplot(I) +
+  aes(x=time, y=conc) + 
+  geom_point(color="black", fill="lightgreen")+
+  geom_smooth(color="lightblue", fill="pink")+
+  labs(x= "Hours after drug admin", y= "Plasma concentration of drug (mcg/ml)",
+       title= "Pharmacokinetics of Indomethacin",
+       caption = "Source: Rdata")
+print(p1.2)
+```
+
+```{r}
+p2 <- ggplot(I, aes(x=as.factor(time),y=conc,fill=as.factor(time))) + geom_boxplot() 
+plot(p2)
+```
+
+```{r}
+p2.2 <- ggplot(I) +
+  aes(x=as.factor(time),y=conc,fill=as.factor(time))+
+  geom_boxplot(color="black",fill="pink")+
+  labs(x= "Hours", y= "Concentration (mcg/ml)",
+       title= "Pharmacokinetics of Indomethacin",
+       caption = "Source: Rdata")
+plot(p2.2)
+```
+
+```{r}
+p3 <- ggplot(I) +
+         aes(x=time,y=conc,col=as.factor(time)) + 
+         geom_point(size=2)
+plot(p3)
+```
+
+```{r}
+p3.2 <- ggplot(I) +
+         aes(x=time,y=conc,col=as.factor(time)) + 
+         geom_point(size=2) +
+  labs(x= "Time after drug administration (hr)", y= "Plasma concentration of indomethacin (mcg/ml)", col= "Time Gradient" ,
+       title= "Pharmacokinetics of Indomethacin",
+       subtitle = "Concentration of Indomethacin in blood over 8 hours",
+       caption = "Source: Rdata")
+plot(p3.2)
+```
+
+```{r}
+p3.3 <- ggplot(I) +
+         aes(x=time,y=conc,col=as.factor(time)) + 
+         geom_point(size=2) +
+  geom_hline(yintercept=0.75, linetype ="dashed", color="black")+
+  annotate("text",x=7, y=0.85, label = "Minimum effective dose", color = "black") +
+  labs(x= "Time after drug administration (hr)", y= "Plasma concentration of indomethacin (mcg/ml)", col= "Time Gradient" , 
+       title= "Pharmacokinetics of Indomethacin",
+       subtitle = "Concentration of Indomethacin in blood over 8 hours",
+       caption = "Source: Rdata")
+plot(p3.3)
+```
+
+
+
+

@@ -1,0 +1,59 @@
+---
+title: "Homework11"
+author: "Phoebe"
+date: "2023-04-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+source("HW11Functions.R")
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+x <- read.csv("TreeData.csv")
+```
+
+```{r}
+for(i in 2016:2017){
+  y <- x%>%
+  filter(year ==i)
+output <- paste0(i)
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+write.csv(y, file = output, sep = ",", col.names = T, row.names = F)
+}
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+tree16 <- read.table("2016", sep=",", header=T)
+tree17 <- read.table("2017", sep=",", header=T)
+```
+
+```{r}
+s16<- reg_stats(tree16)
+```
+
+```{r}
+s17<-reg_stats(tree17)
+```
+
+```{r}
+stats <- c(s17,s16)
+print(stats)
+```
+
+```{r}
+title <- "treeheight x diameterbh"
+xlab <- "height"
+ylab <- "diameter at breast height"
+df <- data.frame(tree16[,7], tree16[,5])
+colnames(df)[1] <- "dbh"
+colnames(df)[2] <- "ht"
+graphing(df)
+```

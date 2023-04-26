@@ -1,0 +1,127 @@
+---
+title: "Homework8"
+author: "Phoebe"
+date: "2023-03-29"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("/Users/phoebecousens/Desktop/CompBio/CousensBIOL381")
+z <- read.csv("SHEAbl.csv")
+```
+
+```{r}
+library(ggplot2)
+library(patchwork)
+library(MASS)
+library(tidyverse)
+library(tidyr)
+```
+
+```{r}
+set <- z[,9:11]
+```
+
+```{r}
+# The cross correlation(XCorr) value represents how well experimental peptide sequences fit a theoretical spectra. A unique deltaCorr different from the normal indicates that there was a post-translational modification of the peptide. 
+```
+
+```{r}
+n <- 209
+variance <- 2
+```
+
+`simulated data set`
+```{r}
+xcorr <- data.frame("xcorr",rnorm(209, mean = 2.5, sd = sqrt(variance)))
+colnames(xcorr)<-c("corrtype", "corrval")
+difxcorr <- data.frame("difxcorr",rnorm(209, mean = 0.5, sd = sqrt(.1)))
+colnames(difxcorr)<-c("corrtype", "corrval")
+uniqxcorr <- data.frame("uniqxcorr",rnorm(209, mean = 0.65, sd = sqrt(.01)))
+colnames(uniqxcorr)<-c("corrtype", "corrval")
+
+ds <- rbind(xcorr, difxcorr, uniqxcorr)
+```
+
+`null hypothesis: there is no significant difference between the xcorr values of each correlation type, indicating no post-translational modifications`
+
+`ANOVA`
+
+```{r}
+model <- aov(corrval ~ corrtype, data = ds)
+summary(model)
+```
+
+```{r}
+ggplot() +
+  geom_point(data = ds, aes(corrtype, corrval)) +
+  geom_point(data = model, aes(corrtype,corrval), colour = "pink", size = 3) 
+```
+
+```{r}
+boxplot(data=ds, corrval ~ corrtype)
+```
+
+`Determining effect size by changing mean values`
+
+```{r}
+xcorrm <- data.frame("xcorr",rnorm(209, mean = 1.1, sd = sqrt(variance)))
+colnames(xcorrm)<-c("corrtype", "corrval")
+difxcorrm <- data.frame("difxcorr",rnorm(209, mean = 1.0, sd = sqrt(.1)))
+colnames(difxcorrm)<-c("corrtype", "corrval")
+uniqxcorrm <- data.frame("uniqxcorr",rnorm(209, mean = 1.05, sd = sqrt(.01)))
+colnames(uniqxcorrm)<-c("corrtype", "corrval")
+
+dsm <- rbind(xcorrm, difxcorrm, uniqxcorrm)
+```
+
+```{r}
+modelm <- aov(corrval ~ corrtype, data = dsm)
+summary(modelm)
+```
+
+`By altering the means of each group to make them more equal, the significance quickly moves above the 0.05 significance level, and the data becomes insignificant. `
+
+```{r}
+ggplot() +
+  geom_point(data = dsm, aes(corrtype, corrval)) +
+  geom_point(data = modelm, aes(corrtype,corrval), colour = "pink", size = 3) 
+```
+
+```{r}
+boxplot(data=dsm, corrval ~ corrtype)
+```
+
+`Determining sample size necessary to maintain significance`
+
+```{r}
+xcorrss <- data.frame("xcorr",rnorm(2, mean = 2.5, sd = sqrt(variance)))
+colnames(xcorrss)<-c("corrtype", "corrval")
+difxcorrss <- data.frame("difxcorr",rnorm(2, mean = 0.5, sd = sqrt(.1)))
+colnames(difxcorrss)<-c("corrtype", "corrval")
+uniqxcorrss <- data.frame("uniqxcorr",rnorm(2, mean = 0.65, sd = sqrt(.01)))
+colnames(uniqxcorrss)<-c("corrtype", "corrval")
+
+dsss <- rbind(xcorrss, difxcorrss, uniqxcorrss)
+```
+
+```{r}
+modelss <- aov(corrval ~ corrtype, data = dsss)
+summary(modelss)
+```
+
+`Even with a sample size of only 2, with these means and standard deviations, the significance remains below the 0.05 significance level and the data is still significant.`
+
+```{r}
+ggplot() +
+  geom_point(data = dsss, aes(corrtype, corrval)) +
+  geom_point(data = modelss, aes(corrtype,corrval), colour = "pink", size = 3) 
+```
+
+```{r}
+boxplot(data=dsss, corrval ~ corrtype)
+```
