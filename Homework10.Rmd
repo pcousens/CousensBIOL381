@@ -26,7 +26,7 @@ for(i in 1:length(vector)){
   if(vector[i] == 0) {
     counter <- 1 + counter
   }
-  print(counter)
+  head(counter)
 }
 
 ```
@@ -41,19 +41,18 @@ print(subset)
 ```
 
 ```{r}
-m <- matrix(nrow=10, ncol=3)
 
-mat<- function(x,y) {
-  m <- matrix(nrow=x, ncol=y)
-  for (i in 1:x) { 
-  for (j in 1:y) {
+mat<- function() {
+  m <- matrix(nrow=10, ncol=6)
+  for (i in 1:nrow(m)) { 
+    for (j in 1:ncol(m)) {
     m[i,j] <- i*j
-    print(m)
+    }
   }
-  }
+print(m)
 }
 
-mat(10, 6)
+mat()
 
 ```
 
@@ -65,7 +64,7 @@ set.seed(100)
 group <- c(rep("Group1",5),rep("Group2",5),rep("Group3",5))
 resvar <- c(runif(5) + 1 , runif(5) + 5 , runif(5) + 10)
 frame <- data.frame(trt=group, res=resvar)
-print(frame)
+head(frame)
 ```
 
 ```{r}
@@ -78,7 +77,7 @@ print(obs)
 ```{r}
 frame_shuf <- frame
 frame_shuf$res <- sample(frame_shuf$res)
-print(frame_shuf)
+head(frame_shuf)
 ```
 
 ```{r}
@@ -96,7 +95,9 @@ colnames(Group2) <- c("Group", "Length")
 Group3 <- data.frame(rep("Group3", 5), runif(5) + 10)
 colnames(Group3) <- c("Group", "Length")
 data <- rbind(Group1, Group2, Group3)
+```
 
+```{r}
 mog <- c(mean(data$Length, Group = "Group1"), mean(data$Length, Group = "Group2"), mean(data$Length, Group = "Group3"))
 
 meancalc <- function(mc){
@@ -111,8 +112,9 @@ for(i in 1:100){
 }
 
 colnames(df) <- c("rep", "Group1", "Group2", "Group3")
-print(df)
+head(df)
 ```
+
 
 ```{r}
 hist(df[,2])
@@ -124,4 +126,9 @@ hist(df[,3])
 
 ```{r}
 hist(df[,4])
+```
+
+```{r}
+# The reshuffled set of means formed a normal distribution for each individual group. The mean of each group of reshuffled data fell around 6, which is expected for a set of numbers between 1 and 10. The difference between groups is now insignificant due to the randomization of data points. The difference in means of the original data set were significantly different. 
+
 ```
