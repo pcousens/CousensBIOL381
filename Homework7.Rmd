@@ -47,12 +47,12 @@ norm$estimate["mean"]
 ```
 
 ```{r}
-meanML <- norm$estimate["mean"]
-sdML <- norm$estimate["sd"]
+dmean <- norm$estimate["mean"]
+dsd <- norm$estimate["sd"]
 
 xval <- seq(0, max(z$XCorr), len=length(z$XCorr))
 
- stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="blue", n = length(z$XCorr), args = list(mean = meanML, sd = sdML))
+ stat <- stat_function(aes(x = xval, y = ..y..), fun = dnorm, colour="blue", n = length(z$XCorr), args = list(mean = dmean, sd = dsd))
  hist + stat
 ```
 
@@ -90,4 +90,37 @@ statSpecial <- stat_function(aes(x = xval, y = ..y..), fun = dbeta, colour="dark
 pSpecial + statSpecial
 ```
 
+```{r}
+# normal distribution is the best fit for this dataset 
+```
 
+```{r}
+#simulated dataset
+```
+
+```{r}
+dat <- rnorm(1:209, shapeML, shapeML)
+dat <- data.frame(1:209,dat)
+names(dat) <- list("ID","XCorr") 
+str(dat) 
+summary(dat$XCorr)
+
+datmean <- mean(dat$XCorr)
+datsd <- sd(dat$XCorr)
+
+```
+
+```{r}
+sdat <-data.frame(1:209,rnorm(n=209, mean=datmean, sd=datsd))
+sdat$XCorr <-sdat$rnorm.n...209..mean...datmean..sd...datsd.
+splot <-ggplot(data= sdat,aes(x=XCorr,y=..density..)) +
+  geom_histogram(color="grey60",fill="lightblue",linewidth=0.2,binwidth=5)
+sdens <- splot + geom_density(linetype="dotted",size=0.75)
+sdens
+
+print(pSpecial)
+```
+
+```{r}
+# The simulated data set has a much larger range of numbers than the original; however, the general pattern of the distribution is similar to the original.
+```
